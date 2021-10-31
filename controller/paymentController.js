@@ -1,7 +1,10 @@
-const {Payment , Order ,Passenger,BusSchedule,BusProvider,Bus, OrderDetail} = require('../models')
+const {Payment , Order ,Passenger,BusSchedule,BusProvider,Bus, OrderDetail,User} = require('../models')
 const {midtransSnap} = require('../util/midtrans')
 const moment = require('moment')
 const {orderDetail} = require('../helper/orderDetail')
+const nodemailer = require('nodemailer')
+const hbs = require('nodemailer-express-handlebars')
+const path = require('path')
  
 
 
@@ -202,6 +205,47 @@ async function paymentHandling(req,res){
           // and response with 200 OK
           await Order.update({ order_status: "success" }, { where: { id : orderId} });
           await Payment.update({ payment_status: "success" }, { where: { order_id : orderId} });
+          const order = await Order.findOne({
+            where : {
+              id : orderId
+            }
+          })
+          const user = await User.findOne({
+            where :{
+              id : order.user_id
+            }
+          })
+          let transporter = nodemailer.createTransport({
+            service : "Gmail",
+            auth : {
+                user : "shuttlefinalproject@gmail.com",
+                pass : "@Secret123"
+            }
+            })
+            const handlebarOptions = {
+                viewEngine: {
+                    partialsDir: path.resolve("./views"),
+                    defaultLayout: false,
+                },
+                viewPath: path.resolve("./views"),
+            };
+            transporter.use("compile", hbs(handlebarOptions));
+            const mailOption = {
+                from : "shuttlefinalproject@gmail.com",
+                to :user.email,
+                subject : "Ticket Number !",
+                template : "tiket",
+                context : {
+                    ticket : order.ticket
+                }
+            }
+            transporter.sendMail(mailOption,function(error,info){
+                if(error) {
+                    console.log(error)
+                }
+                console.log("Message sent : ")
+              
+            })
         } else if (
           transactionStatus == "cancel" ||
           transactionStatus == "deny" ||
