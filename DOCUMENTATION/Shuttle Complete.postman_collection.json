@@ -1,0 +1,1242 @@
+{
+	"info": {
+		"_postman_id": "6143f392-615e-41c8-862b-739181e42076",
+		"name": "Shuttle Complete",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "/user (get user profile)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://final-project-shuttle.herokuapp.com/user",
+							"protocol": "https",
+							"host": [
+								"final-project-shuttle",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/auth/google ( login with google)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://final-project-shuttle.herokuapp.com/auth/google",
+							"protocol": "https",
+							"host": [
+								"final-project-shuttle",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"auth",
+								"google"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/user/register  ( register )",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"token\",pm.response.json().token)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fullname\": \"joshua\",\r\n    \"email\": \"joshua@gmail.com\",\r\n    \"birthday\": \"2021-10-08\",\r\n    \"password\": \"secret\",\r\n    \"roles\" : \"bus_provider\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://final-project-shuttle.herokuapp.com/user/register",
+							"protocol": "https",
+							"host": [
+								"final-project-shuttle",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"user",
+								"register"
+							]
+						},
+						"description": "Role can be \"user\" OR \"bus_provider\""
+					},
+					"response": []
+				},
+				{
+					"name": "/user/login ( login )",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"token\",pm.response.json().token)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"wijaya@gmail.com\",\r\n    \"password\" : \"secret\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://final-project-shuttle.herokuapp.com/user/login/",
+							"protocol": "https",
+							"host": [
+								"final-project-shuttle",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"user",
+								"login",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/user/updatePicture",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "avatar",
+									"type": "file",
+									"src": "/C:/Users/MSI-J/OneDrive/Desktop/Untitled.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://final-project-shuttle.herokuapp.com/user/updatePicture",
+							"protocol": "https",
+							"host": [
+								"final-project-shuttle",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"user",
+								"updatePicture"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/user (change password )",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"old_password\" : \"secret\",\r\n    \"new_password\" : \"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://final-project-shuttle.herokuapp.com/user",
+							"protocol": "https",
+							"host": [
+								"final-project-shuttle",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/user/profile ( update user profile)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"phone\" : \"0812221112\"\r\n   \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://final-project-shuttle.herokuapp.com/user/profile",
+							"protocol": "https",
+							"host": [
+								"final-project-shuttle",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"user",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Order",
+			"item": [
+				{
+					"name": "/order/ (create-order)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"departure_date\" :\"2021-11-24\" ,\r\n    \"return_date\" : \"2021-11-25\",\r\n    \"fullname\" : [\"joshua\",\"bailey\"],\r\n    \"email\" : [\"joshua@gmail.com\",\"bailey@gmail.com\"], \r\n    \"age\" : [17,20],\r\n    \"phone\" : [\"123123123123\",\"123123122315\"],\r\n    \"departure_seat\": [3,4],\r\n    \"return_seat\" : [37,36],\r\n    \"passenger\": 2,\r\n    \"order_type\" : \"OneWay\",\r\n    \"departure_bus_id\":\"6270811d-d20a-4cc8-bcde-61fbc11f724c\",\r\n    \"return_bus_id\": \"dce28657-9300-4903-9e7f-eaba0838758d\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://final-project-shuttle.herokuapp.com/order",
+							"protocol": "https",
+							"host": [
+								"final-project-shuttle",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/order/ (seat Arrangement)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"date\" : \"2021-10-24\",\r\n    \"bus_schedule_id\" : \"dce28657-9300-4903-9e7f-eaba0838758d\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://final-project-shuttle.herokuapp.com/order/",
+							"protocol": "https",
+							"host": [
+								"final-project-shuttle",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"order",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/order/detail (show order detail )",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"order_id\" : \"0fa2489f-6551-441b-bdac-5a3a87cc82b3\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://final-project-shuttle.herokuapp.com/order/detail",
+							"protocol": "https",
+							"host": [
+								"final-project-shuttle",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"order",
+								"detail"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/order/e-ticket (show all ticket detail )",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://final-project-shuttle.herokuapp.com/order/e-ticket",
+							"protocol": "https",
+							"host": [
+								"final-project-shuttle",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"order",
+								"e-ticket"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/order/ticket (show detail of selected ticket)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"order_id\" : \"3055b9a3-f026-45b3-855e-c4675a45741e\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://final-project-shuttle.herokuapp.com/order/ticket",
+							"protocol": "https",
+							"host": [
+								"final-project-shuttle",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"order",
+								"ticket"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Review",
+			"item": [
+				{
+					"name": "/review (create review)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"order_id\" :\"c4ade0c4-1955-4785-afd4-f322b35a5a19\",\r\n    \"order_detail_id\" :\"c9003640-2cb0-4d78-94cf-5bb593da576b\",\r\n    \"rating\" : 1,\r\n    \"review\" : \"bus nyaman\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://final-project-shuttle.herokuapp.com/review/",
+							"protocol": "https",
+							"host": [
+								"final-project-shuttle",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"review",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/review ( show all Bus Review )",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://final-project-shuttle.herokuapp.com/review/?bus_schedule_id=18eb7900-2848-499b-9743-4848451e2957",
+							"protocol": "https",
+							"host": [
+								"final-project-shuttle",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"review",
+								""
+							],
+							"query": [
+								{
+									"key": "bus_schedule_id",
+									"value": "18eb7900-2848-499b-9743-4848451e2957"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/order/review (show all User Review)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://final-project-shuttle.herokuapp.com/order/review",
+							"protocol": "https",
+							"host": [
+								"final-project-shuttle",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"order",
+								"review"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Bus",
+			"item": [
+				{
+					"name": "/bus/provider/ (create bus provider)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"provider_name\": \"PT SINAR BUS\",\r\n    \"city\": \"Jakarta\",\r\n    \"email\": \"sinar@gmail.com\",\r\n    \"phone\": \"0216723723\",\r\n    \"website\": \"www.sinar.com\",\r\n    \"facebook\": \"sinar\",\r\n    \"instagram\": \"@sinar\",\r\n    \"twitter\" : \"@twitter\",\r\n    \"photo\": \"body.photo\",\r\n    \"banking_name\": \"sinar\",\r\n    \"banking_account\": \"bca\",\r\n    \"tax_id\": \"12123123123123123\",\r\n    \"ktp_owner\": \"123123123123123123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://final-project-shuttle.herokuapp.com/bus/provider",
+							"protocol": "https",
+							"host": [
+								"final-project-shuttle",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"bus",
+								"provider"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/bus/shuttle (create bus shuttle )",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"city\": \"Surabaya\",\r\n    \"shuttle_name\": \"Terminal Surabaya\",\r\n    \"address\": \"jln.mangga\",\r\n    \"published\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://final-project-shuttle.herokuapp.com/bus/shuttle",
+							"protocol": "https",
+							"host": [
+								"final-project-shuttle",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"bus",
+								"shuttle"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/bus/schedule (create bus schedule)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"bus_name\": \"SinarXII\",\r\n    \"seat\": 40,\r\n    \"air_conditioner\" : false,\r\n    \"toilet\" : \"false\",\r\n    \"free_meal\" : \"false\",\r\n    \"charger\": \"false\",\r\n    \"comfortable_seat\": \"false\",\r\n    \"wifi\" : \"false\",\r\n    \"departure_time\": \"12:00\",\r\n    \"arrival_time\": \"18:00\",\r\n    \"destination_city\": \"Jakarta\",\r\n    \"departure_city\": \"Surabaya\",\r\n    \"arrival_shuttle\": \"Terminal Jakarta\",\r\n    \"departure_shuttle\": \"Terminal Surabaya\",\r\n    \"price\": 200000,\r\n    \"published\" : true  \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://final-project-shuttle.herokuapp.com/bus/schedule",
+							"protocol": "https",
+							"host": [
+								"final-project-shuttle",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"bus",
+								"schedule"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/bus/shuttle ( delete shuttle)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\" : \"0c926c2c-2668-414b-92e8-67657956a8d5asdasd\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://final-project-shuttle.herokuapp.com/bus/shuttle",
+							"protocol": "https",
+							"host": [
+								"final-project-shuttle",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"bus",
+								"shuttle"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/bus/schedule/:id (delete bus schedule)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"air_conditioner\" : true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://final-project-shuttle.herokuapp.com/bus/schedule/f8fb3520-cc7d-4d9f-bfe2-3a7166e0f6bdasdasd",
+							"protocol": "https",
+							"host": [
+								"final-project-shuttle",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"bus",
+								"schedule",
+								"f8fb3520-cc7d-4d9f-bfe2-3a7166e0f6bdasdasd"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "bus/provider (update provider)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":  \"sinar_jaya@gmail.com\"\r\n   \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://final-project-shuttle.herokuapp.com/bus/provider",
+							"protocol": "https",
+							"host": [
+								"final-project-shuttle",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"bus",
+								"provider"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/bus/schedule (update schedule)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/bus/schedule",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"bus",
+								"schedule"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/bus/provider (show provider)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://final-project-shuttle.herokuapp.com/bus/provider",
+							"protocol": "https",
+							"host": [
+								"final-project-shuttle",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"bus",
+								"provider"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/bus/shuttle (search all shuttle-bus vendor)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://final-project-shuttle.herokuapp.com/bus/shuttle",
+							"protocol": "https",
+							"host": [
+								"final-project-shuttle",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"bus",
+								"shuttle"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/search/shuttle (show all shuttle)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://final-project-shuttle.herokuapp.com/search/shuttle",
+							"protocol": "https",
+							"host": [
+								"final-project-shuttle",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"search",
+								"shuttle"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/search/ (search bus )",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://final-project-shuttle.herokuapp.com/search?arrival_shuttle_id=81cefdf4-370b-4201-8d5e-816b2fea8d8a&departure_date=2021-10-29&departure_shuttle_id=f9fafe16-544f-4928-8ed2-6bebc30e0b5a&order_type=RoundWay&passenger=1&time=12:00-18:00&r_time=12:00-18:00&return_date=2021-10-25",
+							"protocol": "https",
+							"host": [
+								"final-project-shuttle",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"search"
+							],
+							"query": [
+								{
+									"key": "arrival_shuttle_id",
+									"value": "81cefdf4-370b-4201-8d5e-816b2fea8d8a"
+								},
+								{
+									"key": "departure_date",
+									"value": "2021-10-29"
+								},
+								{
+									"key": "departure_shuttle_id",
+									"value": "f9fafe16-544f-4928-8ed2-6bebc30e0b5a"
+								},
+								{
+									"key": "order_type",
+									"value": "RoundWay"
+								},
+								{
+									"key": "passenger",
+									"value": "1"
+								},
+								{
+									"key": "time",
+									"value": "12:00-18:00"
+								},
+								{
+									"key": "r_time",
+									"value": "12:00-18:00"
+								},
+								{
+									"key": "return_date",
+									"value": "2021-10-25"
+								},
+								{
+									"key": "sort_by",
+									"value": "price",
+									"disabled": true
+								},
+								{
+									"key": "direction",
+									"value": "DESC",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/search/bus (search bus detail)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://final-project-shuttle.herokuapp.com/search/bus?id=c7d78854-6007-42bb-a69a-45d9d687140f",
+							"protocol": "https",
+							"host": [
+								"final-project-shuttle",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"search",
+								"bus"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "c7d78854-6007-42bb-a69a-45d9d687140f"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Payment",
+			"item": [
+				{
+					"name": "/payment/ (payment)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"order_id\"  : \"0a218a80-6411-46f9-a6e8-15a89ea8be22\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://final-project-shuttle.herokuapp.com/payment/",
+							"protocol": "https",
+							"host": [
+								"final-project-shuttle",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"payment",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/payment/show/status (show by status payment)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://final-project-shuttle.herokuapp.com/payment/show/status?status=pending",
+							"protocol": "https",
+							"host": [
+								"final-project-shuttle",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"payment",
+								"show",
+								"status"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "pending"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/payment/detail (show payment detail by order id)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"order_id\" : \"3055b9a3-f026-45b3-855e-c4675a45741e\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://final-project-shuttle.herokuapp.com/payment/detail",
+							"protocol": "https",
+							"host": [
+								"final-project-shuttle",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"payment",
+								"detail"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
