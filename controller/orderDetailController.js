@@ -31,7 +31,11 @@ async function showAllOrderDetailWithReview(req,res){
             }
         ]
     })
-    return res.status(200).json({status :"success" , data : detail})
+    return res.status(200).json(
+        {
+            status :"success",
+            data : detail
+        })
 }
 
 

@@ -67,9 +67,18 @@ async function findBusSchedule(req,res){
             },
             include : [Bus]
         })
-        return res.status(200).json({status : "message" , data : result})
+        return res.status(200).json(
+            {
+                status : "message",
+                data : result
+            })
     }catch(e){
-        return res.status(400).json({status : "failed" , message : "Error has occured !" , error : e })
+        return res.status(400).json(
+            {
+                status : "failed",
+                message : "Error has occured !",
+                error : e 
+            })
     }
 }
 
@@ -103,9 +112,18 @@ async function updateBusSchedule(req,res){
             const bus = await Bus.update({...req.body},{where: {
                 id : findBus.bus_id
             }},{transaction :t })
-            return res.status(200).json({status : "success",  message: "updated success, you can only update time & price ! "})
+            return res.status(200).json(
+                {
+                    status : "success",
+                    message: "updated success, you can only update time & price ! "
+                })
         }catch(e){
-            return res.status(400).json({status : "failed" , message : "Error has occured " ,error : e})
+            return res.status(400).json(
+                {
+                    status : "failed",
+                    message : "Error has occured ",
+                    error : e
+                })
         }
  
     })
@@ -137,9 +155,18 @@ async function deleteBusSchedule (req,res){
                 },{transaction :t })
 
             deleteBusInShuttle(findBus.departure_shuttle_id)
-            return res.status(200).json({status : "success",  message: "Bus deleted !"})    
+            return res.status(200).json(
+                {
+                    status : "success",
+                    message: "Bus deleted !"
+                })    
         }catch(e){
-            return res.status(400).json({status : "failed" , message : "Error has occured " ,error : e})
+            return res.status(400).json(
+                {
+                    status : "failed",
+                    message : "Error has occured ",
+                    error : e
+                })
         }
     })
 }
@@ -162,9 +189,18 @@ async function showAllBus(req,res){
                 }
             ]
         })
-        return res.status(200).json({status:"success", data : bus})
+        return res.status(200).json(
+            {
+                status:"success",
+                data : bus
+            })
     }catch(e){
-        return res.status(400).json({status : "failed" , message : "Error has occured !"})
+        return res.status(400).json(
+            {
+                status : "failed",
+                message : "Error has occured !",
+                error : e
+            })
     }
     
 }

@@ -60,13 +60,21 @@ async function createOrder(req,res){
                 let d_seats = await availableSeat(departure_date,departure_bus_id)
 
                 if(d_seats[departure_seat[i]-1] != 0) {
-                    return res.status(400).json({status : "failed" , message : "seat already booked !"})
+                    return res.status(400).json(
+                        {
+                            status : "failed",
+                            message : "seat already booked !",
+                        })
                 }
 
                 let return_seats = await availableSeat(return_date,return_bus_id)
 
                 if(return_seats[return_seat[i]-1] != 0){
-                    return res.status(400).json({status : "failed" , message : "seat already booked !"})
+                    return res.status(400).json(
+                        {
+                            status : "failed",
+                            message : "seat already booked !"
+                        })
                 } 
             }
         }
@@ -117,10 +125,20 @@ async function createOrder(req,res){
             createOrderDetail({order_id : order.id,bus_schedule_id : departure_bus_id,departure_date : departure_date},{transaction:t})
             createOrderDetail({order_id : order.id,bus_schedule_id : return_bus_id, return_date : return_date},{transaction:t})
         }
-        return res.status(200).json({status: "success" , message : "order has been created !",orderId : order.id})
+        return res.status(200).json(
+            {
+                status: "success",
+                message : "order has been created !",
+                orderId : order.id,
+            })
     }) 
     }catch(e){
-        return res.status(400).json({status : "failed" , message: "order cannot been created", error : e})
+        return res.status(400).json(
+            {
+                status : "failed",
+                message: "order cannot been created",
+                error : e
+            })
     }
 }
 
@@ -128,9 +146,17 @@ async function showOrderDetail(req,res){
     try{
         const {order_id} = req.body
         const data = await orderDetail(order_id)
-        return res.status(200).json({status : "success", data : data})
+        return res.status(200).json(
+            {
+                status : "success",
+                data : data
+            })
     }catch(e){
-        return res.status(400).json({status : "failed", message : "Error has occured" , error : e })
+        return res.status(400).json(
+            {
+                status : "failed",
+                message : "Error has occured",
+                error : e })
     }
 }    
 
@@ -142,9 +168,18 @@ async function seatArrangement(req,res){
         } = req.body
 
         const seat = await availableSeat(date,bus_schedule_id)
-        return res.status(200).json({status : "success", data : seat})
+        return res.status(200).json(
+            {
+                status : "success",
+                data : seat
+            })
     }catch(e){
-        return res.status(400).json({status:"failed",message : "error has been occured !", error : e})
+        return res.status(400).json(
+            {
+                status:"failed",
+                message : "error has been occured !",
+                error : e
+            })
     }  
 }
 
@@ -192,9 +227,18 @@ async function showUserReviewByOrder(req,res){
             } 
         })
 
-        return res.status(200).json({status : "success", data : result})
+        return res.status(200).json(
+            {
+                status : "success",
+                data : result
+            })
     }catch(e){
-        return res.status(400).json({status:"failed",message : "error has been occured !", error : e})
+        return res.status(400).json(
+            {
+                status:"failed",
+                message : "error has been occured !",
+                error : e
+            })
     }
 }
 
@@ -240,7 +284,11 @@ async function showTicket(req,res){
             })
         }
     }
-    return res.status(200).json({status : "success" , data : result})
+    return res.status(200).json(
+        {
+            status : "success",
+            data : result
+        })
 }
 
 
@@ -269,7 +317,12 @@ async function showTicketDetail (req,res){
                 order_id : order_id
             }
         })
-        if(order.length == 0 )return res.status(200).json({status : "success", message :"ticket is not found"  , data : []})
+        if(order.length == 0 )return res.status(200).json(
+            {
+                status : "success",
+                message :"ticket is not found",
+                data : []
+            })
         const dept=  []
             const e = order
             const elem = order.OrderDetails[1].BusSchedule
@@ -326,9 +379,19 @@ async function showTicketDetail (req,res){
            
         })
         }
-        return res.status(200).json({status : "success" , departure : dept , return : r})
+        return res.status(200).json(
+            {
+                status : "success",
+                departure : dept,
+                return : r
+            })
     }catch(e){
-        return res.status(400).json({status : "failed" , error : e , message : "Error has occured !"})
+        return res.status(400).json(
+            {
+                status : "failed",
+                message : "Error has occured !",
+                error : e,
+            })
     }
 }
 

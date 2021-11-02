@@ -26,9 +26,18 @@ async function createShuttle(req,res){
       }
       });
     if(!created) return res.status(400).json({status:"failed" , message :"this shuttle has been created" , pastCreatedData : result})
-    return res.status(200).json({status : "success" , message : result })
+    return res.status(200).json(
+      {
+        status : "success",
+        message : result 
+      })
   }catch(e){
-    return res.status(400).json({status:"failed", error : e , message : "Error has been occured !"} )
+    return res.status(400).json(
+      {
+        status: "failed",
+        message : "Error has been occured !",
+        error : e ,
+      })
   }}
 
 async function findShuttleByUserId(city,name,userId){

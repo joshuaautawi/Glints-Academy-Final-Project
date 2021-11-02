@@ -26,4 +26,5 @@ router.patch("/profile",isLogin,updateProfileValidate,updateUserProfile)
 router.patch("/",isLogin,changePassword)
 
 
+
 module.exports = router

@@ -170,9 +170,18 @@ async function showPaymentDetail (req,res){
         passengers : passenger
       }
     }
-    return res.status(200).json({status : "success" , data :result})
+    return res.status(200).json(
+      {
+        status : "success",
+        data :result,
+      })
   }catch(e){
-    return res.status(400).json({status : "failed", error : e  , message :"Error has occured !"} )
+    return res.status(400).json(
+      {
+        status : "failed",
+        message :"Error has occured !",
+        error : e,
+      })
   }
 }
 

@@ -16,10 +16,19 @@ async function createReview(req,res){
         })
         if(!created)return res.status(400).json({status : "failed" , message : "review has been created for this order !"})
 
-        return res.status(200).json({status : "success" , message :"review created !"})
+        return res.status(200).json(
+            {
+                status : "success",
+                message :"review created !",
+            })
     
     }catch(e){
-        return res.status(400).json({status : "failed" , error : e , message : "error has occured !"})
+        return res.status(400).json(
+            {
+                status : "failed",
+                message : "error has occured !",
+                error : e,
+            })
     }
 }
 
@@ -38,7 +47,12 @@ async function reviewAndRating (req,res){
             }
         ]
         })
-        if(findBusRating.length == 0 ) return res.status(200).json({status : "success" , message : "No review yet for this bus !" , rating : 0})
+        if(findBusRating.length == 0 ) return res.status(200).json(
+            {
+                status : "success",
+                message : "No review yet for this bus !",
+                rating : 0
+            })
         let rating = 0
         const reviewSummary = []
         
@@ -49,9 +63,19 @@ async function reviewAndRating (req,res){
         })
     
         const totalRating = Math.floor(rating/findBusRating.length) ? Math.floor(rating/findBusRating.length) : 0
-        return res.status(200).json({status : "success" , rating :totalRating , allReview : reviewSummary})
+        return res.status(200).json(
+            {
+                status : "success",
+                rating :totalRating,
+                allReview : reviewSummary
+            })
     }catch(e){
-        return res.status(400).json({status:"failed", message : "Error has occured ! ", error :e})
+        return res.status(400).json(
+            {
+                status:"failed",
+                message : "Error has occured ! ",
+                error :e
+            })
     }
     
 }

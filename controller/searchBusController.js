@@ -116,10 +116,20 @@ async function searchSchedule(req,res){
       })
   }
   }
-    return res.status(200).json({status : "success", departure :departure_r , return : return_r})
+    return res.status(200).json(
+      {
+        status : "success",
+        departure :departure_r,
+        return : return_r
+      })
   }catch(e){
     console.log(e)
-    return res.status(400).json({status : "failed" , message : "error has occured !" , error : e})
+    return res.status(400).json(
+      {
+        status : "failed",
+        message : "error has occured !",
+        error : e
+      })
   }
 }
 
@@ -127,9 +137,18 @@ async function searchSchedule(req,res){
 async function searchShuttle(req,res){
   try{
     const shuttle = await Shuttle.findAll()
-    return res.status(200).json({status : "success",data : shuttle})
+    return res.status(200).json(
+      {
+        status : "success",
+        data : shuttle
+      })
   }catch(e){
-    return res.status(400).json({status : "failed" , message : "error has occured" , error :e })
+    return res.status(400).json(
+      {
+        status : "failed",
+        message : "error has occured",
+        error :e 
+      })
   }
 }
 

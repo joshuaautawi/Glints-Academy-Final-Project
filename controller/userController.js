@@ -26,17 +26,31 @@ async function createUser(req,res){
                     ...req.body
                 }  
             })
-            if(!created) return res.status(400).json({status : "failed",message : "this email has register !"})
+            if(!created) return res.status(400).json(
+                {
+                    status : "failed",
+                    message : "this email has register !"
+                })
             createPassword({
                 password : req.body.password,
                 id : user.id
             },{transaction :t})
             token = sign(user.dataValues,process.env.JWT_SECRET)
-            return res.status(200).json({status : "success",message : "User has been created !", token : token})
+            return res.status(200).json(
+                {
+                    status : "success",
+                    message : "User has been created !",
+                    token : token
+                })
           });
           
     }catch(e){
-        return res.status(400).json({status : "failed", message : "Something missing" , error : e})
+        return res.status(400).json(
+            {
+                status : "failed",
+                message : "Something missing",
+                error : e
+            })
         }
     }
 
@@ -47,15 +61,28 @@ async function updateUserProfile(req,res){
                 id : req.user.id
             }
         })
-        if(req.body.email) return res.status(400).json({status :"failed", message : "email cannot be changed !"})
+        if(req.body.email) return res.status(400).json(
+            {
+                status :"failed",
+                message : "email cannot be changed !"
+            })
         const updatedUser = await User.update({...req.body},{
             where : {
                 id : req.user.id
             }
         })
-        return res.status(200).json({status :"success" , message: "User profile has been changed"})
+        return res.status(200).json(
+            {
+                status :"success" ,
+                message : "User profile has been changed"
+            })
     }catch(e){
-        return res.status(400).json({status : "failed", message : "Error has occured " , error : e})
+        return res.status(400).json(
+            {
+                status : "failed",
+                message : "Error has occured ",
+                error : e
+            })
     }
 }
 
@@ -67,9 +94,18 @@ async function getUserProfile(req,res){
                 id : req.user.id
             }   
         })
-        return res.status(200).json({status : "success" , data : user })
+        return res.status(200).json(
+            {
+                status : "success",
+                data : user,
+            })
     }catch(e){
-        return res.status(400).json({status : "failed" , message : "error has occured !", error : e})
+        return res.status(400).json(
+            {
+                status : "failed",
+                message : "error has occured !",
+                error : e
+            })
     }
 }
 
@@ -82,7 +118,11 @@ async function uploadPicture(req,res){
             id : req.user.dataValues.id
         }
     })
-    return res.status(200).json({status :"success", data :req.pp.url})
+    return res.status(200).json(
+        {
+            status :"success",
+            data :req.pp.url
+        })
 }
 
 
@@ -107,10 +147,19 @@ async function login (req,res){
         if(checkPassword(req.body.password,user.Password.password)){
             token = sign(result,process.env.JWT_SECRET)
             
-            return res.status(200).cookie("token",token,options).json({status : "success", token : token})
+            return res.status(200).cookie("token",token,options).json(
+                {
+                    status : "success",
+                    token : token
+                })
         }else throw new Error
     }catch(e){
-        return res.status(400).json({status :"failed", message : "username/password is wrong", error : e})
+        return res.status(400).json(
+            {
+                status :"failed",
+                message : "username/password is wrong",
+                error : e
+            })
     }
 }
 
@@ -153,10 +202,19 @@ async function loginWithGoogleOAuth(req,res){
             httpOnly: true,
         };  
         tokens =  sign(data,process.env.JWT_SECRET)
-        return res.status(200).json({status : "success", token : tokens})
+        return res.status(200).json(
+            {
+                status : "success",
+                token : tokens
+            })
         })
     }catch(e){    
-        return res.status(400).json({status : "failed", message : "Something missing" ,error : e})
+        return res.status(400).json(
+            {
+                status : "failed",
+                message : "Something missing",
+                error : e
+            })
         
     }
 }
@@ -198,10 +256,19 @@ async function loginWithFacebook(req,res){
                 }
             }
             tokens =  sign(data,process.env.JWT_SECRET)
-            return res.status(200).json({status : "success", token : tokens})
+            return res.status(200).json(
+                {
+                    status : "success",
+                    token : tokens
+                })
             })
     }catch(e){
-        return res.status(400).json({status : "failed", message : "Something missing",error : e })
+        return res.status(400).json(
+            {
+                status : "failed",
+                message : "Something missing",
+                error : e,
+            })
     }
 }
 
@@ -239,7 +306,11 @@ async function loginWithFacebook(req,res){
             }
         }
         tokens =  sign(data,process.env.JWT_SECRET)
-        return res.status(200).json({status : "success", token : tokens})  
+        return res.status(200).json(
+            {
+                status : "success",
+                token : tokens
+            })  
         }
 }
     
@@ -283,18 +354,22 @@ async function forgotPassword(req,res){
                 }
                 console.log("Message sent : ")    
             })
-            return res.status(200).json({status : "success" })
+            return res.status(200).json(
+                {
+                    status : "success",
+                })
             }
     }catch(e){
-        return res.status(400).json({status :"failed" , message : "error has occured !" , error : e})
+        return res.status(400).json(
+            {
+                status :"failed",
+                message : "error has occured !",
+                error : e
+            })
     }   
 }
     
     
-
-
-    
-
 module.exports = {
     login,
     createUser,
@@ -304,4 +379,5 @@ module.exports = {
     updateUserProfile,
     loginWithFacebook,
     loginWithToken, 
-    forgotPassword}
+    forgotPassword
+}
