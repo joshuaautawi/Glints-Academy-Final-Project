@@ -1,5 +1,5 @@
 
-const { Shuttle ,BusProvider,BusSchedule} = require("../models")
+const { Shuttle, BusProvider, BusSchedule } = require("../models")
 
 
 

@@ -1,7 +1,7 @@
 
-const {BusSchedule ,sequelize,BusProvider,Bus,Shuttle} = require('../models')
-const {createBus} = require('../controller/busController')
-const {findShuttleByUserId ,addBusInShuttle,deleteBusInShuttle} = require('../controller/shuttleController')
+const { BusSchedule, sequelize, BusProvider, Bus, Shuttle } = require('../models')
+const { createBus } = require('../controller/busController')
+const { findShuttleByUserId, addBusInShuttle, deleteBusInShuttle } = require('../controller/shuttleController')
 
 const { Sequelize, Transaction, DATEONLY, DATE } = require('sequelize');
 

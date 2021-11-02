@@ -4,8 +4,8 @@ const { isLogin ,authorize} = require('../middleware/auth')
 const {createReviewValidate} = require("../middleware/validation/reviewValidation")
 
 
-router.post('/',createReviewValidate,isLogin,authorize("user"),createReview)
-router.get('/',reviewAndRating)
+router.post("/",createReviewValidate,isLogin,authorize("user"),createReview)
+router.get("/",reviewAndRating)
 
 
 module.exports = router

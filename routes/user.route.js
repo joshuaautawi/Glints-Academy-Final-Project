@@ -7,11 +7,12 @@ const {registerValidate , loginValidate,changePasswordValidate,updateProfileVali
 const timeout = require('connect-timeout')
 
 
-router.get('/',isLogin,getUserProfile)
-router.post('/register',registerValidate,createUser)
-router.post('/login',loginValidate,login)
-router.post('/updatePicture',timeout("30s"),isLogin,upload,uploadPicture)
-router.patch('/profile',isLogin,updateProfileValidate,updateUserProfile)
-router.patch('/',isLogin,changePassword)
+router.get("/",isLogin,getUserProfile)
+router.post("/register",registerValidate,createUser)
+router.post("/login",loginValidate,login)
+router.post("/updatePicture",timeout("30s"),isLogin,upload,uploadPicture)
+router.patch("/profile",isLogin,updateProfileValidate,updateUserProfile)
+router.patch("/",isLogin,changePassword)
+
 
 module.exports = router

@@ -1,5 +1,5 @@
 const { User , Password, sequelize } = require('../models')
-const { encrypt , checkPassword} =require('../helper/encryption')
+const { encrypt, checkPassword } =require('../helper/encryption')
 
 
 
@@ -29,4 +29,4 @@ async function changePassword (req,res){
     }
 }
 
-module.exports = { createPassword,changePassword}
+module.exports = { createPassword, changePassword }

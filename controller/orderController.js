@@ -2,9 +2,9 @@ const { Order ,sequelize ,BusSchedule ,Passenger, Bus, Shuttle, BusProvider,User
 const { Op ,Transaction} = require("sequelize");
 const { generateTicket } = require('../helper/ticketGenerator');
 const moment = require('moment');
-const {availableSeat} = require('../helper/seat')
-const {orderDetail} = require('../helper/orderDetail')
-const {createOrderDetail}= require('./orderDetailController')
+const { availableSeat } = require('../helper/seat')
+const { orderDetail } = require('../helper/orderDetail')
+const { createOrderDetail }= require('./orderDetailController')
 
 
 async function createOrder(req,res){

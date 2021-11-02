@@ -1,4 +1,4 @@
-const { UserReview ,Order , BusSchedule,Bus , Shuttle , BusProvider,User,OrderDetail } = require("../models")
+const { UserReview, Order, BusSchedule, Bus, Shuttle, BusProvider, User, OrderDetail } = require("../models")
 
 
 async function createReview(req,res){
@@ -56,4 +56,4 @@ async function reviewAndRating (req,res){
     
 }
 
-module.exports = {createReview ,reviewAndRating}
+module.exports = { createReview, reviewAndRating }

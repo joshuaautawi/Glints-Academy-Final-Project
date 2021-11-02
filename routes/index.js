@@ -9,14 +9,14 @@ const searchBus = require('./searchBus.route')
 const { isLogin, authorize } = require('../middleware/auth')
 
 
-router.use('/user',userRoute)
-router.use('/auth', passportRoute)
-router.use('/review',reviewRoute)
-router.use('/order',isLogin,authorize("user"),orderRoute)
-router.use('/bus',isLogin,authorize("bus_provider"),busRoute)
-router.use('/payment',paymentRoute)
-router.use('/search',searchBus)
-router.get('/',(req,res)=>{
+router.use("/user",userRoute)
+router.use("/auth", passportRoute)
+router.use("/review",reviewRoute)
+router.use("/order",isLogin,authorize("user"),orderRoute)
+router.use("/bus",isLogin,authorize("bus_provider"),busRoute)
+router.use("/payment",paymentRoute)
+router.use("/search",searchBus)
+router.get("/",(req,res)=>{
     res.status(200).json({message : "HELLO WORLD"})
 })
 

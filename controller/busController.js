@@ -1,4 +1,4 @@
-const {Bus} = require('../models')
+const { Bus } = require('../models')
 
 async function createBus(bus){
     const result = await Bus.create({

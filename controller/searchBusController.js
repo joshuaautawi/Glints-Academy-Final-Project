@@ -1,45 +1,30 @@
 const { BusSchedule, Shuttle, Bus, BusProvider } = require('../models');
 const Joi = require('joi').extend(require('@joi/date'));
 const Op = require('sequelize').Op;
-const {availableSeat} = require('../helper/seat');
+const { availableSeat } = require('../helper/seat');
 
 
 async function searchSchedule(req,res){
   try{
-
-    // ================SORTING start here:===================
     const {departure_shuttle_id , arrival_shuttle_id ,departure_date,return_date,passenger,order_type ,time,r_time, sort_by, direction} = req.query
     let return_r = []
     let seats ;
     let filtered_bus;
+    let order;
+    if (sort_by) {
+      order = [
+        [sort_by, direction],
+    ]
+    } else {
+      order = []
+    }
     
-    // const allowed_sort = ['price','departure_time', 'arrival_time', 'duration']
-    // if(sort_by){
-    //   if (!allowed_sort.includes(sort_by)) {
-    //     return res.status(400).json ({
-    //       status: 'failed', 
-    //       message: 'invalid input on sort by field'
-    //     });
-  
-    //   }
-    //   if (direction != 'ASC' && direction != 'DESC' ) {
-    //     return res.status(400).json ({
-    //       status: 'failed', 
-    //       message: 'invalid input on direction field'
-    //     });
-    //   }
-    // }
-    
-    // ===============SORTING End Here==============================
-
       const bus = await BusSchedule.findAll({
         where :{
           departure_shuttle_id :departure_shuttle_id,
           arrival_shuttle_id : arrival_shuttle_id
         },
-      //   order: [
-      //     [sort_by, direction],
-      // ],
+        order,
         include : [ BusProvider,Bus]
       })
         if(time){
@@ -51,6 +36,7 @@ async function searchSchedule(req,res){
         }
 
       let departure_r = []
+      
       for(let i = 0 ; i < filtered_bus.length;i++){
           const f = filtered_bus[i]
           const num1 = Number(f.departure_time.slice(0,2))
@@ -117,15 +103,12 @@ async function searchSchedule(req,res){
           seats : seats
       })
   }
-  
   }
     return res.status(200).json({status : "success", departure :departure_r , return : return_r})
-    
   }catch(e){
+    console.log(e)
     return res.status(400).json({status : "failed" , message : "error has occured !" , error : e})
   }
- 
-
 }
 
 
@@ -138,7 +121,4 @@ async function searchShuttle(req,res){
   }
 }
 
-
-
-// Export
-module.exports = {searchSchedule,searchShuttle };
+module.exports = { searchSchedule, searchShuttle };

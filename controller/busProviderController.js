@@ -1,4 +1,4 @@
-const {BusProvider} = require('../models')
+const { BusProvider } = require('../models')
 
 
 async function createBusProvider (req,res){

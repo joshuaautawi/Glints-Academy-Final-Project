@@ -1,7 +1,7 @@
-const {Payment , Order ,Passenger,BusSchedule,BusProvider,Bus, OrderDetail,User} = require('../models')
-const {midtransSnap} = require('../util/midtrans')
+const { Payment, Order ,Passenger, BusSchedule, BusProvider, Bus, OrderDetail, User } = require('../models')
+const { midtransSnap } = require('../util/midtrans')
 const moment = require('moment')
-const {orderDetail} = require('../helper/orderDetail')
+const { orderDetail } = require('../helper/orderDetail')
 const nodemailer = require('nodemailer')
 const hbs = require('nodemailer-express-handlebars')
 const path = require('path')
@@ -272,4 +272,4 @@ async function paymentHandling(req,res){
 
 
 
-module.exports = {createPayment ,paymentHandling ,showPaymentDetail,showPaymentByStatus}
+module.exports = { createPayment, paymentHandling, showPaymentDetail, showPaymentByStatus }

@@ -1,4 +1,4 @@
-const {OrderDetail,Order,UserReview } = require('../models')
+const { OrderDetail, Order, UserReview } = require('../models')
 
 async function createOrderDetail(detail){
     const result = await OrderDetail.create({
@@ -30,4 +30,4 @@ async function showAllOrderDetailWithReview(req,res){
 
 
 
-module.exports = {createOrderDetail,showAllOrderDetailWithReview}
+module.exports = { createOrderDetail, showAllOrderDetailWithReview }
