@@ -1,8 +1,27 @@
 const router = require('express').Router()
-const {createBusSchedule,showAllBus,updateBusSchedule,deleteBusSchedule} = require('../controller/busScheduleController')
-const {createBusProvider,updateBusProvider,readBusProvider} = require("../controller/busProviderController")
-const { createShuttle ,findShuttleById,showAllShuttle, deleteShuttle} = require("../controller/shuttleController")
-const {createProviderValidate,createScheduleValidate,createShuttleValidate } = require("../middleware/validation/busValidation")
+const {
+    createBusSchedule,
+    showAllBus,
+    updateBusSchedule,
+    deleteBusSchedule
+} = require('../controller/busScheduleController')
+const {
+    createBusProvider,
+    updateBusProvider,
+    readBusProvider
+} = require("../controller/busProviderController")
+const {
+    createShuttle,
+    findShuttleById,
+    showAllShuttle,
+    deleteShuttle
+} = require("../controller/shuttleController")
+const {
+    createProviderValidate,
+    createScheduleValidate,
+    createShuttleValidate
+} = require("../middleware/validation/busValidation")
+
 
 router.get("/provider",readBusProvider)
 router.post("/provider",createProviderValidate,createBusProvider)

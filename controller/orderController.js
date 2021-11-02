@@ -109,8 +109,6 @@ async function createOrder(req,res){
                 )
             }
         }
-           
-            
         await Passenger.bulkCreate(bulkData,{transaction:t})
         if(order_type == "OneWay"){
             createOrderDetail({order_id : order.id,bus_schedule_id : departure_bus_id,departure_date : departure_date})
@@ -124,7 +122,6 @@ async function createOrder(req,res){
     }catch(e){
         return res.status(400).json({status : "failed" , message: "order cannot been created", error : e})
     }
-    
 }
 
 async function showOrderDetail(req,res){
