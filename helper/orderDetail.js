@@ -1,4 +1,10 @@
-const { Order ,OrderDetail,BusProvider,BusSchedule,Bus,Passenger} = require('../models')
+const {
+    Order,
+    OrderDetail,
+    BusProvider,
+    BusSchedule,
+    Bus,
+} = require('../models')
 const moment = require('moment')
 
 async function orderDetail (order_id){
@@ -61,4 +67,4 @@ async function orderDetail (order_id){
 
 
 
-module.exports = { orderDetail}
+module.exports = { orderDetail }

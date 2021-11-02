@@ -143,21 +143,21 @@ async function createOrder(req,res){
 }
 
 async function showOrderDetail(req,res){
-    try{
-        const {order_id} = req.body
+    // try{
+        const {order_id} = req.query
         const data = await orderDetail(order_id)
         return res.status(200).json(
             {
                 status : "success",
                 data : data
             })
-    }catch(e){
-        return res.status(400).json(
-            {
-                status : "failed",
-                message : "Error has occured",
-                error : e })
-    }
+    // }catch(e){
+    //     return res.status(400).json(
+    //         {
+    //             status : "failed",
+    //             message : "Error has occured",
+    //             error : e })
+    // }
 }    
 
 async function seatArrangement(req,res){
