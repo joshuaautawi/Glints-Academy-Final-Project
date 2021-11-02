@@ -1,9 +1,12 @@
-
-
 const router = require('express').Router()
-const {createPayment , paymentHandling,showPaymentDetail,showPaymentByStatus} = require('../controller/paymentController')
+const {
+    createPayment,
+    paymentHandling,
+    showPaymentDetail,
+    showPaymentByStatus
+} = require('../controller/paymentController')
 const { isLogin, authorize } = require('../middleware/auth')
-const {createPaymentValidate} = require("../middleware/validation/paymentValidation");
+const { createPaymentValidate} = require("../middleware/validation/paymentValidation");
 
 
 router.get("/",createPaymentValidate,createPayment);

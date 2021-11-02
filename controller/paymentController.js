@@ -85,21 +85,22 @@ async function showPaymentByStatus (req,res){
 async function showPaymentDetail (req,res){
   try{
     let result ;
-    const { order_id} = req.body
+    const { order_id } = req.body
+    const { id } = req.user
     const passenger = await Passenger.findAll({
       where :{
-        order_id : order_id
+        order_id
       }
     })
     const payment = await Payment.findOne({
       where : {
-        order_id : order_id
+        order_id
       },
       include : [
         { 
           model : Order,
           where : {
-            user_id : req.user.id
+            user_id : id
           },
           include : [
             {
@@ -272,4 +273,9 @@ async function paymentHandling(req,res){
 
 
 
-module.exports = { createPayment, paymentHandling, showPaymentDetail, showPaymentByStatus }
+module.exports = {
+  createPayment,
+  paymentHandling,
+  showPaymentDetail,
+  showPaymentByStatus,
+}

@@ -13,15 +13,16 @@ async function createPassword (user){
 }
 
 async function changePassword (req,res){
-    
+    const { id } = req.user
+    const { old_password , new_password } = req.body
     const result = await User.findAll({
         where : {
-            id : req.user.id
+            id
         },
         include: [Password] 
     })
-    if(checkPassword(req.body.old_password, result[0].dataValues.Password.password)){
-        await result[0].Password.update({password : encrypt(req.body.new_password)})
+    if(checkPassword(old_password, result[0].dataValues.Password.password)){
+        await result[0].Password.update({password : encrypt(new_password)})
         return res.status(200).json({status:"success",message : "password has been changed !"})
     }
     else{

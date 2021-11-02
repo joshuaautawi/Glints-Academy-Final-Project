@@ -17,6 +17,7 @@
     "express": "^4.17.1",
     "express-fileupload": "^1.2.1",
     "express-validator": "^6.12.2",
+    "google-auth-library": "^7.10.1",
     "joi": "^17.4.2",
     "jsonwebtoken": "^8.5.1",
     "midtrans-client": "^1.2.5",

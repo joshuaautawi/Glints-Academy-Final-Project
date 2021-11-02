@@ -1,7 +1,6 @@
 
 const cloudinary = require('cloudinary').v2
 require("dotenv").config({ path: './config/config.env' })
-const timeout = require('connect-timeout')
 
 
 
@@ -13,8 +12,7 @@ cloudinary.config({
 
 
 const upload = (req,res,next)=>{
-//    try{
-   
+   try{
     const allowedExtension = ['png','jpg','jpeg'];
     if(!allowedExtension.includes(req.files.avatar.name.split(".")[1])){
         return res.status(422).json({status : "failed", message : "Invalid file extenstion, please use image extension"});
@@ -43,12 +41,12 @@ const upload = (req,res,next)=>{
             console.log('File deleted!');
         });
     })
-    // .catch((e)=>{
-    //     return res.status(400).json({status : "failed" , error : e , message : "error has occured"})
-    // })
-//    }catch(e){
-//        return res.status(400).json({status : "failed",error : e , message : "req.files.avatar is not found / Error has been occured"})
-//    }
+    .catch((e)=>{
+        return res.status(400).json({status : "failed" , error : e , message : "error has occured"})
+    })
+   }catch(e){
+       return res.status(400).json({status : "failed",error : e , message : "req.files.avatar is not found / Error has been occured"})
+   }
     
 }  
 

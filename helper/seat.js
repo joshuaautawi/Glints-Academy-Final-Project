@@ -3,39 +3,45 @@ const { Op } = require('sequelize');
 
 
 async function availableSeat(date, bus_schedule) {
-  const passengerOne = await Passenger.findAll({
+    const passengerOne = await Passenger.findAll({
+        include : [
+          {
+            model : Order,
+            where :{
+              [Op.or] : [{order_status : "pending"}, {order_status:"success"} ]
+          },
+          
+            include : [
+              {
+                model : OrderDetail,
+                where :{
+                  bus_schedule_id : bus_schedule,
+                  departure_date : date
+                }
+              }
+            ]
+          }
+        ],
+    })
+    const passengerTwo = await Passenger.findAll({
       include : [
         {
           model : Order,
           where :{
             [Op.or] : [{order_status : "pending"}, {order_status:"success"} ]
         },
-        include : [
-          {
-            model : OrderDetail,
-            where :{
-              bus_schedule_id : bus_schedule,
-              departure_date : date
+        
+          include : [
+            {
+              model : OrderDetail,
+              where :{
+                bus_schedule_id : bus_schedule,
+                return_date : date
+              }
             }
-          }]
-        }],
-    })
-  const passengerTwo = await Passenger.findAll({
-    include : [
-      {
-        model : Order,
-        where :{
-          [Op.or] : [{order_status : "pending"}, {order_status:"success"} ]
-      },
-      include : [
-        {
-          model : OrderDetail,
-          where :{
-            bus_schedule_id : bus_schedule,
-            return_date : date
-          }
-        }]
-      }],
+          ]
+        }
+      ],
   })
 
   let totalSeat = 40
@@ -54,8 +60,7 @@ async function availableSeat(date, bus_schedule) {
       seatArrangement[e.return_seat - 1] = "BOOKED"
     })
   }
-
   return seatArrangement;
 }
 
-module.exports = {availableSeat};
+module.exports = { availableSeat };

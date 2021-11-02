@@ -3,28 +3,45 @@ const { BusProvider } = require('../models')
 
 async function createBusProvider (req,res){
   try{
-    const body = req.body
+    const {
+      provider_name,
+      city,
+      email,
+      phone,
+      website,
+      facebook,
+      instagram,
+      twitter,
+      photo,
+      banking_name,
+      banking_account,
+      tax_id,
+      ktp_owner,
+      owner_picture,
+    } = req.body
+    const { id } = req.user
     const [result , created] = await BusProvider.findOrCreate({
       where : {
-        user_id : req.user.id
+        user_id : id
       },
       defaults: {
-        provider_name: body.provider_name,
-        city: body.city,
-        email: body.email,
-        phone: body.phone,
-        website: body.website,
-        facebook: body.facebook,
-        instagram: body.instagram,
-        twitter : body.twitter,
-        photo: body.photo,
-        banking_name: body.banking_name,
-        banking_account: body.banking_account,
-        tax_id: body.tax_id,
-        ktp_owner: body.ktp_owner,
-        owner_picture: body.owner_picture,
-        user_id : req.user.id
+        provider_name,
+        city,
+        email,
+        phone,
+        website,
+        facebook,
+        instagram,
+        twitter,
+        photo,
+        banking_name,
+        banking_account,
+        tax_id,
+        ktp_owner,
+        owner_picture,
+        user_id : id
       }});
+
     if(!created) return res.status(200).json({status:"failed" , message : "Bus Provider already been created" , pastData : result})
     return res.status(200).json({status : "success", message : result})
   }catch(e){
@@ -90,4 +107,9 @@ async function updateBusProvider(req,res){
     }
 }
 
-module.exports = { createBusProvider , findBusProviderId,updateBusProvider,readBusProvider}
+module.exports = {
+  createBusProvider,
+  findBusProviderId,
+  updateBusProvider,
+  readBusProvider
+}

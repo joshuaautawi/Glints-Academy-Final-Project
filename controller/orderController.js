@@ -1,26 +1,54 @@
-const { Order ,sequelize ,BusSchedule ,Passenger, Bus, Shuttle, BusProvider,UserReview,OrderDetail} = require('../models')
+const {
+    Order,
+    sequelize,
+    BusSchedule,
+    Passenger,
+    Bus,
+    BusProvider,
+    UserReview,
+    OrderDetail
+} = require('../models')
 const { Op ,Transaction} = require("sequelize");
 const { generateTicket } = require('../helper/ticketGenerator');
 const moment = require('moment');
 const { availableSeat } = require('../helper/seat')
 const { orderDetail } = require('../helper/orderDetail')
-const { createOrderDetail }= require('./orderDetailController')
+const { createOrderDetail } = require('./orderDetailController')
 
 
 async function createOrder(req,res){
     try{
         const {
-            departure_date, return_date,fullname,email,age,phone,departure_seat,return_seat,passenger,order_type,departure_bus_id,return_bus_id
+            departure_date,
+            return_date,
+            fullname,
+            email,
+            age,
+            phone,departure_seat,
+            return_seat,
+            passenger,
+            order_type,
+            departure_bus_id,
+            return_bus_id
         } = req.body
         const { id } = req.user
-        if(order_type != "RoundTrip" && order_type != "OneWay") return res.status(400).json({status:"failed" , message : "Order type must be 'RoundTrip' or 'OneWay' !"})
+
+        if(order_type != "RoundTrip" && order_type != "OneWay"){
+            return res.status(400).json({status:"failed" , message : "Order type must be 'RoundTrip' or 'OneWay' !"})
+        }
         if(fullname.length != passenger ||
             email.length != passenger ||
             age.length != passenger ||
             phone.length != passenger ||
             departure_seat.length != passenger ) return res.status(400).json({status :"failed",message: "Please check your input !" })
-        if(order_type == "RoundTrip" && return_seat.length != passenger)return res.status(400).json({status :"failed",message: "Please check your input !" })
-        if( return_date == departure_date) return res.status(400).json({status :"failed" , message :"departure date and return date cannot be the same !"})
+            
+        if(order_type == "RoundTrip" && return_seat.length != passenger){
+            return res.status(400).json({status :"failed",message: "Please check your input !" })
+        }
+
+        if( return_date == departure_date){
+            return res.status(400).json({status :"failed" , message :"departure date and return date cannot be the same !"})
+        }
         for(let i = 0 ; i < passenger;i++){
             if(order_type == "OneWay"){
                 let departure_seats = await availableSeat(departure_date,departure_bus_id)
@@ -28,14 +56,20 @@ async function createOrder(req,res){
             }
            
             if(order_type == "RoundTrip"){
+
                 let d_seats = await availableSeat(departure_date,departure_bus_id)
-                if(d_seats[departure_seat[i]-1] != 0) return res.status(400).json({status : "failed" , message : "seat already booked !"})
+
+                if(d_seats[departure_seat[i]-1] != 0) {
+                    return res.status(400).json({status : "failed" , message : "seat already booked !"})
+                }
+
                 let return_seats = await availableSeat(return_date,return_bus_id)
-                if(return_seats[return_seat[i]-1] != 0) return res.status(400).json({status : "failed" , message : "seat already booked !"})
+
+                if(return_seats[return_seat[i]-1] != 0){
+                    return res.status(400).json({status : "failed" , message : "seat already booked !"})
+                } 
             }
-           
         }
-        
         const result = await sequelize.transaction({isolationLevel : Transaction.ISOLATION_LEVELS.READ_UNCOMMITTED},async (t) => {
             const order = await Order.create({
                 date : new Date(),
@@ -105,22 +139,25 @@ async function showOrderDetail(req,res){
 
 async function seatArrangement(req,res){
     try{
-        const{ date,bus_schedule_id} = req.body
+        const{
+            date,
+            bus_schedule_id,
+        } = req.body
+
         const seat = await availableSeat(date,bus_schedule_id)
-        
         return res.status(200).json({status : "success", data : seat})
     }catch(e){
         return res.status(400).json({status:"failed",message : "error has been occured !", error : e})
-    }
-    
+    }  
 }
 
 async function showUserReviewByOrder(req,res){
+    const { id } = req.user
     try{
         const list = await Order.findAll({
             where : {
-                [Op.and] : [ {user_id : req.user.id} ],
-                [Op.or] : [{order_status : "success"} ,{order_status:"pending"} ]
+                [Op.and] : [ { user_id : id } ],
+                [Op.or] : [{ order_status : "success" } ,{ order_status:"pending" }]
             },
             include : [
                 {
@@ -165,10 +202,11 @@ async function showUserReviewByOrder(req,res){
 }
 
 async function showTicket(req,res){
-    let result =[]
+    const { id } = req.user
+    let result = []
     const order = await Order.findAll({
         where :{
-            user_id : req.user.id,
+            user_id : id,
             order_status: "pending"
         },
         include: [
@@ -206,18 +244,18 @@ async function showTicket(req,res){
         }
     }
     return res.status(200).json({status : "success" , data : result})
-    
 }
 
 
 async function showTicketDetail (req,res){
     try{
-        const { order_id} = req.body
+        const { order_id } = req.query
+        const { id } = req.user
         const order = await Order.findOne({
             where :{
                 id : order_id,
                 order_status : "pending",
-                user_id : req.user.id
+                user_id : id
             },
             include : [
                 {
@@ -295,8 +333,15 @@ async function showTicketDetail (req,res){
     }catch(e){
         return res.status(400).json({status : "failed" , error : e , message : "Error has occured !"})
     }
-   
 }
 
 
-module.exports ={ createOrder ,seatArrangement ,showUserReviewByOrder,showOrderDetail,availableSeat,showTicketDetail,showTicket}
+module.exports ={
+    createOrder,
+    seatArrangement,
+    showUserReviewByOrder,
+    showOrderDetail,
+    availableSeat,
+    showTicketDetail,
+    showTicket
+}

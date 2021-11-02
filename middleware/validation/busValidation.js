@@ -78,4 +78,8 @@ function createShuttleValidate(req, res, next) {
     next();
   }
 }
-module.exports = { createProviderValidate,createScheduleValidate,createShuttleValidate };
+module.exports = {
+  createProviderValidate,
+  createScheduleValidate,
+  createShuttleValidate
+};

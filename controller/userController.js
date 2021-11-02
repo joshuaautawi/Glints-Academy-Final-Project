@@ -1,12 +1,10 @@
 
 const { User , Password ,sequelize} = require('../models')
-const { Sequelize, Transaction, DATEONLY, DATE } = require('sequelize');
+const { Transaction } = require('sequelize');
 const { checkPassword } =require('../helper/encryption')
 const { sign } = require('jsonwebtoken')
 const { createPassword } = require('./passwordController');
-const {verify} = require('../helper/verify');
-const { generatePassword } = require('../helper/passwordGenerator');
-const { encrypt }= require('../helper/encryption')
+const { verify } = require('../helper/verifyAuth');
 const nodemailer = require('nodemailer')
 const hbs = require('nodemailer-express-handlebars')
 const path = require('path')
@@ -167,13 +165,13 @@ async function loginWithFacebook(req,res){
     try{
         let tokens ; 
         let data ;
-        const {email,first_name} = req.user._json
+        const { email , first_name } = req.user._json
         const result = await sequelize.transaction({    
             isolationLevel: Transaction.ISOLATION_LEVELS.READ_UNCOMMITTED
             }, async (t) => {
             const checkEmail = await User.findOne({
                 where : {
-                    email : email
+                    email
                 }
             },{transaction :t} )
             if(checkEmail){
@@ -208,7 +206,7 @@ async function loginWithFacebook(req,res){
 }
 
     async function loginWithToken(req,res){
-        const {token} = req.body
+        const { token } = req.body
         const {email ,name} = await verify(token).catch((err) => { next({ name: 'GOOGLE_ERROR', message: err }) });
         let tokens ; 
         if(email){
@@ -246,11 +244,11 @@ async function loginWithFacebook(req,res){
 }
     
 async function forgotPassword(req,res){
-    const {email} = req.body
+    const { email } = req.body
     try{    
         const user = await User.findOne({
             where :{
-                email : email
+                email
             }
         })
         if(user){
@@ -297,4 +295,13 @@ async function forgotPassword(req,res){
 
     
 
-module.exports = { login , createUser,getUserProfile , uploadPicture,loginWithGoogleOAuth , updateUserProfile,loginWithFacebook,loginWithToken , forgotPassword}
+module.exports = {
+    login,
+    createUser,
+    getUserProfile,
+    uploadPicture,
+    loginWithGoogleOAuth,
+    updateUserProfile,
+    loginWithFacebook,
+    loginWithToken, 
+    forgotPassword}

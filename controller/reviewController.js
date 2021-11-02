@@ -3,8 +3,8 @@ const { UserReview, Order, BusSchedule, Bus, Shuttle, BusProvider, User, OrderDe
 
 async function createReview(req,res){
     try{
-        const {order_detail_id,review,rating} = req.body
-        const [result,created]=await UserReview.findOrCreate({
+        const { order_detail_id, review, rating } = req.body
+        const [ result, created ] = await UserReview.findOrCreate({
             where: {
                 user_id : req.user.id,
                 order_detail_id : order_detail_id,
@@ -25,7 +25,7 @@ async function createReview(req,res){
 
 async function reviewAndRating (req,res){
     try{
-        const {bus_schedule_id} = req.query 
+        const { bus_schedule_id } = req.query 
         const findBusRating = await UserReview.findAll({
             include : [{
                 model : OrderDetail,

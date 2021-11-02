@@ -1,23 +1,28 @@
 
-const { Shuttle, BusProvider, BusSchedule } = require("../models")
-
-
+const { Shuttle } = require("../models")
 
 async function createShuttle(req,res){
+  const {
+    shuttle_name,
+    city,
+    address,
+    published
+  } = req.body
+  const { id } = req.user
+
   try{
-    const body = req.body
-    const [result,created] = await Shuttle.findOrCreate({where:{
-      shuttle_name : body.shuttle_name,
-      city : body.city,
-      user_id : req.user.id
+    const [result,created] = await Shuttle.findOrCreate({ where:{
+      shuttle_name,
+      city ,
+      user_id : id ,
     },
       defaults : {
-        city: body.city,
-        shuttle_name : body.shuttle_name,
-        address: body.address,
-        user_id : req.user.id,
+        city,
+        shuttle_name,
+        address,
+        user_id : id ,
         total_bus: 0,
-        published: body.published,
+        published,
       }
       });
     if(!created) return res.status(400).json({status:"failed" , message :"this shuttle has been created" , pastCreatedData : result})
@@ -72,8 +77,9 @@ async function findShuttleById(req,res){
 
 
 async function showAllShuttle(req,res){
+  const { id } = req.user
   try {
-    const showAllShuttle = await Shuttle.findAll({where :{user_id :req.user.id}})
+    const showAllShuttle = await Shuttle.findAll({where :{user_id : id }})
       res.status(200).json({
         status: "success",
         message: "success retrived data",
@@ -121,10 +127,10 @@ async function updateShuttle(req,res){
 
 
 async function deleteShuttle(req,res){
-  
+  const { id } = req.body
   try {
     const deleteShuttle = await Shuttle.destroy({
-      where: { id : req.body.id },
+      where: { id },
     });
     return res.status(200).json({
       status: "success",
@@ -142,5 +148,12 @@ async function deleteShuttle(req,res){
 
 
 module.exports = {
-  createShuttle,findShuttleByUserId,deleteShuttle,updateShuttle,showAllShuttle ,addBusInShuttle,findShuttleById,deleteBusInShuttle
+  createShuttle,
+  findShuttleByUserId,
+  deleteShuttle,
+  updateShuttle,
+  showAllShuttle,
+  addBusInShuttle,
+  findShuttleById,
+  deleteBusInShuttle
 }

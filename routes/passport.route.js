@@ -1,5 +1,8 @@
 const passport = require('passport');
-const { loginWithGoogleOAuth, loginWithFacebook } = require('../controller/userController');
+const {
+  loginWithGoogleOAuth,
+  loginWithFacebook 
+} = require('../controller/userController');
 const router = require("express").Router()
 
 

@@ -83,5 +83,10 @@ function updateProfileValidate (req,res,next){
 }
 
 
-module.exports = {registerValidate,loginValidate,updateProfileValidate,changePasswordValidate}
+module.exports = {
+  registerValidate,
+  loginValidate,
+  updateProfileValidate,
+  changePasswordValidate
+}
 

@@ -1,6 +1,9 @@
 const router = require('express').Router();
 
-const {searchSchedule ,searchShuttle} = require('../controller/searchBusController');
+const {
+    searchSchedule,
+    searchShuttle
+} = require('../controller/searchBusController');
 const { findBusSchedule} = require("../controller/busScheduleController")
 
 router.get("/", searchSchedule);

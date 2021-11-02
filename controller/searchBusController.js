@@ -6,7 +6,19 @@ const { availableSeat } = require('../helper/seat');
 
 async function searchSchedule(req,res){
   try{
-    const {departure_shuttle_id , arrival_shuttle_id ,departure_date,return_date,passenger,order_type ,time,r_time, sort_by, direction} = req.query
+    const {
+      departure_shuttle_id,
+      arrival_shuttle_id,
+      departure_date,
+      return_date,
+      passenger,
+      order_type,
+      time,
+      r_time,
+      sort_by,
+      direction
+    } = req.query
+    
     let return_r = []
     let seats ;
     let filtered_bus;
@@ -115,7 +127,7 @@ async function searchSchedule(req,res){
 async function searchShuttle(req,res){
   try{
     const shuttle = await Shuttle.findAll()
-  return res.status(200).json({status : "success",data : shuttle})
+    return res.status(200).json({status : "success",data : shuttle})
   }catch(e){
     return res.status(400).json({status : "failed" , message : "error has occured" , error :e })
   }

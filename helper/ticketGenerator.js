@@ -5,4 +5,4 @@ const generateTicket = ()=>{
 }
 
 
-module.exports = { generateTicket}
+module.exports = { generateTicket }
