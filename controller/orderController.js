@@ -244,51 +244,61 @@ async function showUserReviewByOrder(req,res){
 
 async function showTicket(req,res){
     const { id } = req.user
-    let result = []
-    const order = await Order.findAll({
-        where :{
-            user_id : id,
-            order_status: "pending"
-        },
-        include: [
-            {
-                model: OrderDetail,
-                include : [BusSchedule]
-            }
-        ]
-    })
-   
-    for(let i = 0 ;i<order.length;i++){
-        const departure_ticket_status = order[i].departure_date <=new Date()
-        if(order[i].order_type == "RoundTrip"){
-            const return_ticket_status = order[i].return_date <= new Date()
-            
-            result.push( {
-                order_id : order[i].id,
-                ticket : order[i].ticket,
-                departure_date : order[i].departure_date,
-                departure_status_ticket :  departure_ticket_status,
-                departure_destination : `${order[i].OrderDetails[0].BusSchedule.departure_city} - ${order[i].OrderDetails[0].BusSchedule.destination_city}`,
-                return_date : order[i].return_date,
-                return_destination : ""+ order[i].OrderDetails[1].BusSchedule.departure_city + " - "+order[i].OrderDetails[1].BusSchedule.destination_city,
-                return_ticket_status : return_ticket_status
-    
-            })
-        }else if( order[i].order_type == "OneWay"){
-            result.push({
-                order_id : order[i].id,
-                ticket : order[i].ticket,
-                departure_date : order[i].departure_date,
-                departure_destination : ""+ order[i].OrderDetail[0].BusSchedule.departure_city + " - "+order[i].OrderDetail[0].BusSchedule.departure_city,
-                departure_status_ticket : departure_ticket_status
-            })
-        }
-    }
-    return res.status(200).json(
-        {
-            status : "success",
-            data : result
+    try{
+        let result = []
+        const order = await Order.findAll({
+            where :{
+                user_id : id,
+                order_status: "pending"
+            },
+            include: [
+                {
+                    model: OrderDetail,
+                    include : [BusSchedule]
+                }
+            ]
         })
+    
+        for(let i = 0 ;i<order.length;i++){
+            const departure_ticket_status = order[i].departure_date <=new Date()
+            if(order[i].order_type == "RoundTrip"){
+                const return_ticket_status = order[i].return_date <= new Date()
+                
+                result.push( {
+                    order_id : order[i].id,
+                    ticket : order[i].ticket,
+                    departure_date : order[i].departure_date,
+                    departure_status_ticket :  departure_ticket_status,
+                    departure_destination : `${order[i].OrderDetails[1].BusSchedule.departure_city} - ${order[i].OrderDetails[1].BusSchedule.destination_city}`,
+                    return_date : order[i].return_date,
+                    return_destination : ""+ order[i].OrderDetails[0].BusSchedule.departure_city + " - "+order[i].OrderDetails[0].BusSchedule.destination_city,
+                    return_ticket_status : return_ticket_status
+        
+                })
+            }else if( order[i].order_type == "OneWay"){
+                result.push({
+                    order_id : order[i].id,
+                    ticket : order[i].ticket,
+                    departure_date : order[i].departure_date,
+                    departure_destination : ""+ order[i].OrderDetails[0].BusSchedule.departure_city + " - "+order[i].OrderDetails[0].BusSchedule.destination_city,
+                    departure_status_ticket : departure_ticket_status
+                })
+            }
+        }
+        return res.status(200).json(
+            {
+                status : "success",
+                data : result
+            })
+    }catch(e){
+        return res.status(400).json(
+            {
+                status:"failed",
+                message : "error has been occured !",
+                error : e
+            })
+    }
+    
 }
 
 
