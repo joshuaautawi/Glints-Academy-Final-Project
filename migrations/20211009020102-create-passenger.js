@@ -1,52 +1,52 @@
-'use strict';
+"use strict";
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Passengers', {
+    await queryInterface.createTable("Passengers", {
       id: {
         allowNull: false,
-        unique : true,
+        unique: true,
         primaryKey: true,
         type: Sequelize.UUID,
-        defaultValue : Sequelize.UUIDV4
+        defaultValue: Sequelize.UUIDV4,
       },
       fullname: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       email: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       age: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       phone: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       departure_seat: {
         type: Sequelize.INTEGER,
-        allowNull : false
+        allowNull: false,
       },
       return_seat: {
         type: Sequelize.INTEGER,
-        allowNull : true
+        allowNull: true,
       },
-      order_id : {
-        type : Sequelize.UUID,
-        allowNull : true,
-        foreignKey : true
+      order_id: {
+        type: Sequelize.UUID,
+        allowNull: true,
+        foreignKey: true,
       },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue : new Date()
+        defaultValue: new Date(),
       },
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue : new Date()
-      }
+        defaultValue: new Date(),
+      },
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Passengers');
-  }
+    await queryInterface.dropTable("Passengers");
+  },
 };

@@ -1,44 +1,44 @@
-'use strict';
+"use strict";
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('UserReviews', {
+    await queryInterface.createTable("UserReviews", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       order_id: {
         type: Sequelize.UUID,
-        foreignKey : true
+        foreignKey: true,
       },
       rating: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       review: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       user_id: {
         type: Sequelize.UUID,
-        foreignKey : true
+        foreignKey: true,
       },
       order_detail_id: {
-        type : Sequelize.UUID ,
-        foreignKey: true
+        type: Sequelize.UUID,
+        foreignKey: true,
       },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue : new Date()
+        defaultValue: new Date(),
       },
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue : new Date()
-      }
+        defaultValue: new Date(),
+      },
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('UserReviews');
-  }
+    await queryInterface.dropTable("UserReviews");
+  },
 };

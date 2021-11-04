@@ -1,10 +1,11 @@
-const midtrans = require("midtrans-client")
+const midtrans = require("midtrans-client");
+require("dotenv").config({ path: "./config/config.env" });
+
 
 const midtransSnap = new midtrans.Snap({
-    isProduction : false,
-    serverKey : 'SB-Mid-server-iMbqKcL4u2-6jpP86RjUCMvG',
-    clientKey : 'SB-Mid-client-6FfYm8PYwJ8sl8eu'
+  isProduction: false,
+  serverKey: process.env.MIDTRANS_SERVER,
+  clientKey: process.env.MIDTRANS_CLIENT,
+});
 
-})
-
-module.exports = {midtransSnap};
+module.exports = { midtransSnap };

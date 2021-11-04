@@ -1,67 +1,67 @@
-'use strict';
+"use strict";
 
 const { sequelize } = require("../models");
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Buses', {
+    await queryInterface.createTable("Buses", {
       id: {
         allowNull: false,
-        unique : true,
+        unique: true,
         primaryKey: true,
         type: Sequelize.UUID,
-        defaultValue : Sequelize.UUIDV4
+        defaultValue: Sequelize.UUIDV4,
       },
       bus_name: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       air_conditioner: {
         type: Sequelize.BOOLEAN,
-        defaultValue : false
+        defaultValue: false,
       },
       toilet: {
         type: Sequelize.BOOLEAN,
-        defaultValue : false
+        defaultValue: false,
       },
       free_meal: {
         type: Sequelize.BOOLEAN,
-        defaultValue : false
+        defaultValue: false,
       },
       charger: {
         type: Sequelize.BOOLEAN,
-        defaultValue : false
+        defaultValue: false,
       },
       comforable_seat: {
         type: Sequelize.BOOLEAN,
-        defaultValue : false
+        defaultValue: false,
       },
       wifi: {
         type: Sequelize.BOOLEAN,
-        defaultValue : false
+        defaultValue: false,
       },
       photo_collection: {
-        type: Sequelize.ARRAY(Sequelize.TEXT)
+        type: Sequelize.ARRAY(Sequelize.TEXT),
       },
       seat: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       published: {
         type: Sequelize.BOOLEAN,
-        defaultValue : false
+        defaultValue: false,
       },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue:new Date
+        defaultValue: new Date(),
       },
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue:new Date
-      }
+        defaultValue: new Date(),
+      },
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Buses');
-  }
+    await queryInterface.dropTable("Buses");
+  },
 };

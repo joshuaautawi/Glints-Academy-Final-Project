@@ -1,6 +1,6 @@
-const { Bus } = require('../models')
+const { Bus } = require("../models");
 
-async function createBus(bus){
+async function createBus(bus) {
   const {
     bus_name,
     air_conditioner,
@@ -12,21 +12,20 @@ async function createBus(bus){
     photo_collection,
     seat,
     published,
-  }= bus
+  } = bus;
   const result = await Bus.create({
-        bus_name,
-        air_conditioner,
-        toilet,
-        free_meal,
-        charger,
-        comfortable_seat,
-        wifi,
-        photo_collection,
-        seat,
-        published,
-      });
-  return result
+    bus_name,
+    air_conditioner,
+    toilet,
+    free_meal,
+    charger,
+    comfortable_seat,
+    wifi,
+    photo_collection,
+    seat,
+    published,
+  });
+  return result;
 }
 
-module.exports = { createBus }
-
+module.exports = { createBus };

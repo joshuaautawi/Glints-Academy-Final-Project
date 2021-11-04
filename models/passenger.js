@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Passenger extends Model {
     /**
@@ -11,34 +9,37 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Passenger.belongsTo(models.Order,{
-        foreignKey : "order_id"
-      })
+      Passenger.belongsTo(models.Order, {
+        foreignKey: "order_id",
+      });
     }
-  };
-  Passenger.init({
-    id : {
-      type : DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4,
-      allowNull : false,
-      primaryKey : true
+  }
+  Passenger.init(
+    {
+      id: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        allowNull: false,
+        primaryKey: true,
+      },
+      fullname: DataTypes.STRING,
+      email: DataTypes.STRING,
+      age: DataTypes.INTEGER,
+      phone: DataTypes.STRING,
+      departure_seat: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      return_seat: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
+      order_id: DataTypes.UUID,
     },
-    fullname: DataTypes.STRING,
-    email: DataTypes.STRING,
-    age: DataTypes.INTEGER,
-    phone: DataTypes.STRING,
-    departure_seat: {
-      type : DataTypes.INTEGER,
-      allowNull : false
-    },
-    return_seat: {
-      type : DataTypes.INTEGER,
-      allowNull : true
-    },
-    order_id : DataTypes.UUID
-  }, {
-    sequelize,
-    modelName: 'Passenger',
-  });
+    {
+      sequelize,
+      modelName: "Passenger",
+    }
+  );
   return Passenger;
 };

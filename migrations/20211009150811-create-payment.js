@@ -1,35 +1,35 @@
-'use strict';
+"use strict";
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Payments', {
+    await queryInterface.createTable("Payments", {
       id: {
         allowNull: false,
-        unique : true,
+        unique: true,
         primaryKey: true,
         type: Sequelize.UUID,
-        defaultValue : Sequelize.UUIDV4
+        defaultValue: Sequelize.UUIDV4,
       },
       order_id: {
         type: Sequelize.UUID,
-        foreignKey : true
+        foreignKey: true,
       },
       payment_status: {
         type: Sequelize.ENUM,
-        values : ['success','pending','expired']
+        values: ["success", "pending", "expired"],
       },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue : new Date()
+        defaultValue: new Date(),
       },
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue : new Date()
-      }
+        defaultValue: new Date(),
+      },
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Payments');
-  }
+    await queryInterface.dropTable("Payments");
+  },
 };

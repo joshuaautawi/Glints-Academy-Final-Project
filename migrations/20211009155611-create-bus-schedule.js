@@ -1,64 +1,64 @@
-'use strict';
+"use strict";
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('BusSchedules', {
+    await queryInterface.createTable("BusSchedules", {
       id: {
         allowNull: false,
-        unique : true,
+        unique: true,
         primaryKey: true,
         type: Sequelize.UUID,
-        defaultValue : Sequelize.UUIDV4
+        defaultValue: Sequelize.UUIDV4,
       },
       departure_time: {
-        type: Sequelize.TIME
+        type: Sequelize.TIME,
       },
       arrival_time: {
-        type: Sequelize.TIME
+        type: Sequelize.TIME,
       },
       departure_shuttle_id: {
         type: Sequelize.UUID,
-        foreignKey:true
+        foreignKey: true,
       },
       arrival_shuttle_id: {
         type: Sequelize.UUID,
-        foreignKey:true
+        foreignKey: true,
       },
       bus_id: {
         type: Sequelize.UUID,
-        foreignKey:true
+        foreignKey: true,
       },
       bus_provider_id: {
         type: Sequelize.UUID,
-        foreignKey:true
+        foreignKey: true,
       },
       destination_city: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       departure_city: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       arrival_shuttle: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       departure_shuttle: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
-      price : {
-        type : Sequelize.INTEGER
+      price: {
+        type: Sequelize.INTEGER,
       },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue:new Date
+        defaultValue: new Date(),
       },
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue:new Date
-      }
+        defaultValue: new Date(),
+      },
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('BusSchedules');
-  }
+    await queryInterface.dropTable("BusSchedules");
+  },
 };
