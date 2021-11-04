@@ -11,7 +11,7 @@ function createPaymentValidate (req,res,next){
         "order_id"  : Joi.string().uuid().required(),
     }
     const schema = Joi.object(createPaymentValidate)
-    const { error } = schema.validate(req.body,option)
+    const { error } = schema.validate(req.query,option)
       if (error) {
         return res.status(400).json({
           status: 'failed',

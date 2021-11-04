@@ -10,7 +10,7 @@ const path = require('path')
 
 async function createPayment(req,res){
     try{
-      const { order_id } = req.body
+      const { order_id } = req.query
         const detail = await orderDetail(order_id)
         const [result ,created ]=await Payment.findOrCreate({
         where :{
