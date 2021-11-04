@@ -13,7 +13,7 @@ cloudinary.config({
 
 
 const upload = (req,res,next)=>{
-//    try{
+   try{
    
     const allowedExtension = ['png','jpg','jpeg'];
     if(!allowedExtension.includes(req.files.avatar.name.split(".")[1])){
@@ -43,12 +43,12 @@ const upload = (req,res,next)=>{
             console.log('File deleted!');
         });
     })
-    // .catch((e)=>{
-    //     return res.status(400).json({status : "failed" , error : e , message : "error has occured"})
-    // })
-//    }catch(e){
-//        return res.status(400).json({status : "failed",error : e , message : "req.files.avatar is not found / Error has been occured"})
-//    }
+    .catch((e)=>{
+        return res.status(400).json({status : "failed" , error : e , message : "error has occured"})
+    })
+   }catch(e){
+       return res.status(400).json({status : "failed",error : e , message : "req.files.avatar is not found / Error has been occured"})
+   }
     
 }  
 
