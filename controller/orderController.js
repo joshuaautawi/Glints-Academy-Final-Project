@@ -40,19 +40,35 @@ async function createOrder(req,res){
             email.length != passenger ||
             age.length != passenger ||
             phone.length != passenger ||
-            departure_seat.length != passenger ) return res.status(400).json({status :"failed",message: "Please check your input !" })
+            departure_seat.length != passenger ) return res.status(400).json(
+                {
+                    status :"failed",
+                    message: "Please check your input !" 
+                })
             
         if(order_type == "RoundTrip" && return_seat.length != passenger){
-            return res.status(400).json({status :"failed",message: "Please check your input !" })
+            return res.status(400).json(
+                {
+                    status :"failed",
+                    message: "Please check your input !" 
+                })
         }
 
         if( return_date == departure_date){
-            return res.status(400).json({status :"failed" , message :"departure date and return date cannot be the same !"})
+            return res.status(400).json(
+                {
+                    status :"failed",
+                    message :"departure date and return date cannot be the same !"
+                })
         }
         for(let i = 0 ; i < passenger;i++){
             if(order_type == "OneWay"){
                 let departure_seats = await availableSeat(departure_date,departure_bus_id)
-                if(departure_seats[departure_seat[i]-1] != 0) return res.status(400).json({status : "failed" , message : "seat already booked !"})
+                if(departure_seats[departure_seat[i]-1] != 0) return res.status(400).json(
+                    {
+                        status : "failed",
+                        message : "seat already booked !"
+                    })
             }
            
             if(order_type == "RoundTrip"){
@@ -89,6 +105,12 @@ async function createOrder(req,res){
                 total_passenger : passenger,
                 order_type : order_type
             },{transaction:t})
+        if(!order) return res.status(400).json(
+            {
+                status : "failed !",
+                message : "Create order failed !"
+            }
+        )
         const bulkData =[]
         for(let i = 0 ; i < passenger;i++){
             if(order_type == "OneWay"){
@@ -143,21 +165,29 @@ async function createOrder(req,res){
 }
 
 async function showOrderDetail(req,res){
-    // try{
+    try{
         const {order_id} = req.query
         const data = await orderDetail(order_id)
+        if(!data) return res.status(400).json(
+            {
+                status : "failed !",
+                message : "Order is Not Found!"
+            }
+        )
         return res.status(200).json(
             {
                 status : "success",
                 data : data
             })
-    // }catch(e){
-    //     return res.status(400).json(
-    //         {
-    //             status : "failed",
-    //             message : "Error has occured",
-    //             error : e })
-    // }
+       
+    }catch(e){
+        return res.status(400).json(
+            {
+                status : "failed",
+                message : "Error has occured",
+                error : e 
+            })
+    }
 }    
 
 async function seatArrangement(req,res){
@@ -204,7 +234,12 @@ async function showUserReviewByOrder(req,res){
                 {model : UserReview}
             ]
         })
-        if(list.length == 0 )throw new Error
+        if(list.length == 0) return res.status(400).json(
+            {
+                status : "failed",
+                message : "No success order yet from this user !"
+            }
+        ) 
         const result = []
         list.forEach(e=>{
             const dep_sch= e.OrderDetails[0].BusSchedule
@@ -249,7 +284,7 @@ async function showTicket(req,res){
         const order = await Order.findAll({
             where :{
                 user_id : id,
-                order_status: "pending"
+                order_status: "success"
             },
             include: [
                 {
@@ -258,6 +293,12 @@ async function showTicket(req,res){
                 }
             ]
         })
+        if(order.length == 0 ) return res.status(400).json(
+            {
+                status : "failed",
+                message : "No ticket is founded !"
+            }
+        )
     
         for(let i = 0 ;i<order.length;i++){
             const departure_ticket_status = order[i].departure_date <=new Date()
@@ -309,7 +350,7 @@ async function showTicketDetail (req,res){
         const order = await Order.findOne({
             where :{
                 id : order_id,
-                order_status : "pending",
+                order_status : "success",
                 user_id : id
             },
             include : [
@@ -327,9 +368,15 @@ async function showTicketDetail (req,res){
                 order_id : order_id
             }
         })
-        if(order.length == 0 )return res.status(200).json(
+        if(!passenger) return res.status(400).json(
             {
-                status : "success",
+                status : "failed",
+                message : "Passenger is not found "
+            }
+        )
+        if(order )return res.status(400).json(
+            {
+                status : "failed",
                 message :"ticket is not found",
                 data : []
             })

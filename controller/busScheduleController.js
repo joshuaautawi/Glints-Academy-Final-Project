@@ -28,7 +28,11 @@ async function createBusSchedule(req,res){
         const departureShuttle=  await findShuttleByUserId(departure_city,departure_shuttle,id)
         const arrivalShuttle=  await findShuttleByUserId(destination_city,arrival_shuttle,id)
         if(departureShuttle.id == arrivalShuttle.id){
-            return res.status(400).json({status : "failed" , message :"each shuttle cannot be the same !"})
+            return res.status(400).json(
+                {
+                    status : "failed",
+                    message :"each shuttle cannot be the same !"
+                })
         } 
         const busVendor = await BusProvider.findOne({
             where : {
@@ -51,10 +55,19 @@ async function createBusSchedule(req,res){
             ...body
         },{transaction: t})
         await addBusInShuttle(departureShuttle.total_bus+1,departureShuttle.id)
-        return res.status(200).json({status : "success" , data : busSchedule})
+        return res.status(200).json(
+            {
+                status : "success",
+                data : busSchedule
+            })
         })
     }catch(e){
-        return res.status(400).json({status : "failed" ,message : "Error has been occcured !"})
+        return res.status(400).json(
+            {
+                status : "failed",
+                message : "Error has been occcured !",
+                error : e,
+            })
     }
 }
 
@@ -98,6 +111,12 @@ async function updateBusSchedule(req,res){
                         id
                     }
                 })
+            if(!findBus) return res.status(400).json(
+                {
+                    status : "failed !",
+                    message : "Bus is not founded!"
+                }
+            )
             const schedule = await BusSchedule.update(
                 {
                     departure_time,
@@ -108,10 +127,21 @@ async function updateBusSchedule(req,res){
                         id
                     }
                 },{transaction :t })
-                    
+            if(!schedule) return res.status(400).json(
+                {
+                    status:"failed",
+                    message : "Update failed !"
+                }
+            ) 
             const bus = await Bus.update({...req.body},{where: {
                 id : findBus.bus_id
             }},{transaction :t })
+            if(!bus) return res.status(400).json(
+                {
+                    status:"failed",
+                    message : "Update failed !"
+                }
+            ) 
             return res.status(200).json(
                 {
                     status : "success",
@@ -140,12 +170,26 @@ async function deleteBusSchedule (req,res){
                         id
                     }
                 })
+            if(!findBus) return res.status(400).json(
+                {
+                    status : "failed !",
+                    message : "Bus is not founded!"
+                }
+            )
+
             const schedule = await BusSchedule.destroy(
              {
                 where : {
                     id
                 }
-            },{transaction :t })    
+            },{transaction :t })
+
+            if(!schedule) return res.status(400).json(
+                {
+                    status : "failed !",
+                    message : "Bus is not founded!"
+                }
+            )    
 
             const bus = await Bus.destroy(
                 {
@@ -154,6 +198,12 @@ async function deleteBusSchedule (req,res){
                     }
                 },{transaction :t })
 
+            if(!bus) return res.status(400).json(
+                {
+                    status : "failed !",
+                    message : "Bus is not founded!"
+                }
+            )
             deleteBusInShuttle(findBus.departure_shuttle_id)
             return res.status(200).json(
                 {
@@ -178,7 +228,13 @@ async function showAllBus(req,res){
             where : {
                 user_id : id
             }
-          })
+        })
+        if(!busVendor) return res.status(400).json(
+            {
+                status : "failed !",
+                message : "Bus is not founded!"
+            }
+        )
         const bus = await BusSchedule.findAll({
             where : {
                bus_provider_id : busVendor.id 
@@ -189,6 +245,12 @@ async function showAllBus(req,res){
                 }
             ]
         })
+        if( bus.length == 0 ) return res.status(400).json(
+            {
+                status : "failed !",
+                message : "Bus is not founded!"
+            }
+        )
         return res.status(200).json(
             {
                 status:"success",

@@ -92,6 +92,12 @@ async function showPaymentDetail (req,res){
         order_id
       }
     })
+    if(passenger.length == 0 ) return res.status(400).json(
+      {
+        status:"failed",
+        message : "Passenger is not found !"
+      }
+    )
     const payment = await Payment.findOne({
       where : {
         order_id
@@ -115,6 +121,12 @@ async function showPaymentDetail (req,res){
         }
       ],
     })
+    if(!payment) return res.status(400).json(
+      {
+        status:"failed",
+        message : "Payment is not found !"
+      }
+    )
     const due = payment.createdAt
     const h = due.getHours()+1
     due.setHours(h)

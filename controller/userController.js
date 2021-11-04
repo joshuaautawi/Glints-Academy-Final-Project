@@ -8,6 +8,7 @@ const { verify } = require('../helper/verifyAuth');
 const nodemailer = require('nodemailer')
 const hbs = require('nodemailer-express-handlebars')
 const path = require('path')
+require("dotenv").config({ path: './config/config.env' })
 
 
 
@@ -326,8 +327,8 @@ async function forgotPassword(req,res){
             let transporter = nodemailer.createTransport({
                 service : "Gmail",
                 auth : {
-                    user : "shuttlefinalproject@gmail.com",
-                    pass : "@Secret123"
+                    user : process.env.EMAIL,
+                    pass : process.env.PASS,
                 }
             })
             const handlebarOptions = {

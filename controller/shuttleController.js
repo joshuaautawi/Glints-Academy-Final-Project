@@ -25,7 +25,12 @@ async function createShuttle(req,res){
         published,
       }
       });
-    if(!created) return res.status(400).json({status:"failed" , message :"this shuttle has been created" , pastCreatedData : result})
+    if(!created) return res.status(400).json(
+      {
+        status:"failed",
+        message :"this shuttle has been created",
+        pastCreatedData : result
+      })
     return res.status(200).json(
       {
         status : "success",

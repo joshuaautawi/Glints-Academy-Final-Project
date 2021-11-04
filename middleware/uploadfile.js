@@ -5,9 +5,9 @@ require("dotenv").config({ path: './config/config.env' })
 
 
 cloudinary.config({ 
-    cloud_name: 'dn7cuvi05', 
-    api_key: '673965512636534', 
-    api_secret: 'jizC28w_nb_Ca7aH3uDGvF_o7mw' 
+    cloud_name: process.env.CLOUDINARY_NAME, 
+    api_key: process.env.CLOUDINARY_KEY, 
+    api_secret: process.env.CLOUDINARY_SECRET,
   });
 
 
@@ -15,7 +15,11 @@ const upload = (req,res,next)=>{
    try{
     const allowedExtension = ['png','jpg','jpeg'];
     if(!allowedExtension.includes(req.files.avatar.name.split(".")[1])){
-        return res.status(422).json({status : "failed", message : "Invalid file extenstion, please use image extension"});
+        return res.status(422).json(
+            {
+                status : "failed",
+                message : "Invalid file extenstion, please use image extension"
+            });
     }
 
     const file = req.files.avatar
@@ -42,10 +46,20 @@ const upload = (req,res,next)=>{
         });
     })
     .catch((e)=>{
-        return res.status(400).json({status : "failed" , error : e , message : "error has occured"})
+        return res.status(400).json(
+            {
+                status : "failed",
+                error : e,
+                message : "error has occured"
+            })
     })
    }catch(e){
-       return res.status(400).json({status : "failed",error : e , message : "req.files.avatar is not found / Error has been occured"})
+       return res.status(400).json(
+           {
+                status : "failed",
+                error : e,
+                message : "req.files.avatar is not found / Error has been occured"
+            })
    }
     
 }  

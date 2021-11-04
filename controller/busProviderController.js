@@ -42,32 +42,71 @@ async function createBusProvider (req,res){
         user_id : id
       }});
 
-    if(!created) return res.status(200).json({status:"failed" , message : "Bus Provider already been created" , pastData : result})
-    return res.status(200).json({status : "success", message : result})
+    if(!created) return res.status(200).json(
+      {
+        status:"failed",
+        message : "Bus Provider already been created",
+        pastData : result
+      })
+    return res.status(201).json(
+      {
+        status : "success",
+        message : result
+      })
   }catch(e){
-    return res.status(400).json({status :"failed", message : "error has been occured ", error : e})
+    return res.status(400).json(
+      {
+        status :"failed",
+        message : "error has been occured ",
+        error : e})
   }
    
 }
 
 
 async function findBusProviderId(user){
+  try{
     const result = await BusProvider.findAll({
-        where : {
-            user_id : user.dataValues.id
-        }
+      where : {
+          user_id : user.dataValues.id
+      }
     })
+    if(!result){
+      return res.status(400).json(
+        {
+          status : "failed",
+          message : "Provider not founded !",
+        }
+      )
+    }
     return result[0].id
+  }catch(e){
+    return res.status(400).json(
+      {
+        status : "failed",
+        message : "Error has occured !",
+        error : e,
+      }
+    )
+  }
 }
+
 
 async function readBusProvider(req,res){
     try {
-        const readbusProvider = await BusProvider.findAll();
-        res.status(200).json({
+        const bus = await BusProvider.findAll();
+        if(bus.length == 0) return res.status(400).json(
+          {
+            status : "failed",
+            mesage : "Bus not found"
+          }
+        )
+        return res.status(200).json({
           status: "success",
           massage: "success retrived data",
-          data: readbusProvider,
+          data: bus,
         });
+        
       } catch (error) {
         res.status(500).json({
           status: "failed",

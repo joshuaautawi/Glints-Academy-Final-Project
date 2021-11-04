@@ -1,11 +1,11 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-
+require("dotenv").config({ path: './config/config.env' })
 
 
 passport.use(new GoogleStrategy({
-    clientID: "345429176534-c9pe0ocbtsq92trinm9kgc6c6rq52t37.apps.googleusercontent.com",
-    clientSecret: "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",
+    clientID: process.env.GOOGLE_CLIENT,
+    clientSecret: process.env.GOOGLE_SECRET,
     callbackURL: "https://final-project-shuttle.herokuapp.com/auth/google/callback"
   },
   function (accessToken, refreshToken, profile, cb) {

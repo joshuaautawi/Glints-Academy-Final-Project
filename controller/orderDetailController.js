@@ -17,25 +17,43 @@ async function createOrderDetail(detail){
 }
 
 async function showAllOrderDetailWithReview(req,res){
+
     const { id } = req.user
-    const detail = await OrderDetail.findAll({
-        include : [
-            {
-                model : Order,
-                where : {
-                    user_id : id
+    try{
+        const detail = await OrderDetail.findAll({
+            include : [
+                {
+                    model : Order,
+                    where : {
+                        user_id : id
+                    }
+                },
+                {
+                model : UserReview,
                 }
-            },
-            {
-            model : UserReview,
-            }
-        ]
-    })
-    return res.status(200).json(
-        {
-            status :"success",
-            data : detail
+            ]
         })
+        if(detail.length == 0 ) return res.status(400).json(
+            {
+                status : "failed",
+                message : "Review is not found !"
+            }
+        )
+        return res.status(200).json(
+            {
+                status :"success",
+                data : detail
+            })
+    }catch(e){
+        return res.status(400).json(
+            {
+                status : "failed",
+                message : "Error has occured !",
+                error : e
+            }
+        )
+    }
+    
 }
 
 
