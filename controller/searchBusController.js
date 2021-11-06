@@ -16,26 +16,52 @@ async function searchSchedule(req, res) {
       r_time,
       sort_by,
       direction,
+      bus_name,
     } = req.query;
-
     let return_r = [];
     let seats;
     let filtered_bus;
     let order;
+    let bus;
     if (sort_by) {
       order = [[sort_by, direction]];
     } else {
       order = [];
     }
-
-    const bus = await BusSchedule.findAll({
-      where: {
-        departure_shuttle_id: departure_shuttle_id,
-        arrival_shuttle_id: arrival_shuttle_id,
-      },
-      order,
-      include: [BusProvider, Bus],
-    });
+    if (bus_name) {
+      bus = await BusSchedule.findAll({
+        where: {
+          departure_shuttle_id,
+          arrival_shuttle_id,
+        },
+        order,
+        include: [
+          {
+            model: BusProvider,
+            where: {
+              provider_name: bus_name,
+            },
+          },
+          {
+            model: Bus,
+          },
+        ],
+      });
+    } else {
+      bus = await BusSchedule.findAll({
+        where: {
+          departure_shuttle_id,
+          arrival_shuttle_id,
+        },
+        order,
+        include: [BusProvider, Bus],
+      });
+    }
+    if (bus.length == 0) {
+      return res
+        .status(400)
+        .json({ status: "failed", message: " Bus is not found !" });
+    }
     if (time) {
       const times = time.split("-");
       filtered_bus = bus.filter(
@@ -121,35 +147,26 @@ async function searchSchedule(req, res) {
         });
       }
     }
-    return res.status(200).json({
-      status: "success",
-      departure: departure_r,
-      return: return_r,
-    });
+    return res
+      .status(200)
+      .json({ status: "success", departure: departure_r, return: return_r });
   } catch (e) {
-    console.log(e);
-    return res.status(400).json({
-      status: "failed",
-      message: "error has occured !",
-      error: e,
-    });
+    return res
+      .status(400)
+      .json({ status: "failed", message: "error has occured !", error: e });
   }
 }
 
 async function searchShuttle(req, res) {
   try {
     const shuttle = await Shuttle.findAll();
-    return res.status(200).json({
-      status: "success",
-      data: shuttle,
-    });
+    return res.status(200).json({ status: "success", data: shuttle });
   } catch (e) {
-    return res.status(400).json({
-      status: "failed",
-      message: "error has occured",
-      error: e,
-    });
+    return res
+      .status(400)
+      .json({ status: "failed", message: "error has occured", error: e });
   }
 }
 
+// Export
 module.exports = { searchSchedule, searchShuttle };
